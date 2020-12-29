@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">DhwaniClassicBluetooth</string>
+    <string name="found_devices">Found Devices</string>
+    <string name="scan">Scan</string>
+    <string name="turn_on">Turn On</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">disconnect</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="send">Send</string>
+    <string name="responses">Responses:</string>
+    <string name="send_message">send message</string>
+    <string name="led_is_off">LED IS OFF</string>
+    <string name="led_is">LED IS</string>
+</resources>
