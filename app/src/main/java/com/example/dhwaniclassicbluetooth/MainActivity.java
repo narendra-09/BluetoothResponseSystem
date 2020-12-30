@@ -193,12 +193,14 @@ public class MainActivity extends AppCompatActivity {
             bluetoothSocket = temporary;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void run() {
             bluetoothAdapter.cancelDiscovery();
             try {
                 if (bluetoothSocket != null) {
                     bluetoothSocket.connect();
+                    runOnUiThread(()->{mainBinding.bConnect.setText("Connected");});
                     dataFlowThread = new DataFlowThread(bluetoothSocket);
                     dataFlowThread.start();
                 }
@@ -244,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
             outputStream = tmpOS;
         }
 
+        @SuppressWarnings("InfiniteLoopStatement")
         @SuppressLint("SetTextI18n")
         @Override
         public void run() {
@@ -286,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private CountDownTimer countDownTimer = new CountDownTimer(2000,1000) {
+    private final CountDownTimer countDownTimer = new CountDownTimer(2000,1000) {
         @Override
         public void onTick(long millisUntilFinished) {
          mainBinding.led.setText("LED IS ON");
