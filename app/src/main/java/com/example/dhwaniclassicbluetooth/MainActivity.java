@@ -82,12 +82,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registerReceiver(deviceReceiver, MainActivity.receiverIF());
-        registerReceiver(a2dpReceiver, MainActivity.receiverA2DPIF());
+        //registerReceiver(a2dpReceiver, MainActivity.receiverA2DPIF());
     }
 
     private void setupBluetooth() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        bluetoothAdapter.getProfileProxy(MainActivity.this, serviceListener, BluetoothProfile.A2DP);
+        //bluetoothAdapter.getProfileProxy(MainActivity.this, serviceListener, BluetoothProfile.A2DP);
         if (bluetoothAdapter == null) {
             Toast.makeText(this, "Bluetooth is Not supported in this device", Toast.LENGTH_SHORT).show();
         }
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
-                if(device.getName().equals("JBL GO")){
+                if(device.getAddress().equals("00:18:E4:35:05:47")){
                     mainBinding.bDevices.setText(device.getName() + " " + device.getAddress());
                     bluetoothDevice = device;}
             }
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if ("JBL GO".equals(device.getName())) {
+                if ("00:18:E4:35:05:47".equals(device.getAddress())) {
                     bluetoothDevice = device;
                     mainBinding.bDevices.setText(device.getName() + " " + device.getAddress());
                     bluetoothAdapter.cancelDiscovery();
@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregisterReceiver(deviceReceiver);
-        unregisterReceiver(a2dpReceiver);
+        //unregisterReceiver(a2dpReceiver);
     }
 
     private static IntentFilter receiverIF() {
@@ -230,9 +230,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 if (bluetoothSocket != null) {
                     bluetoothSocket.connect();
-                   /* runOnUiThread(()-> mainBinding.bConnect.setText("Connected"));
+                   runOnUiThread(()-> mainBinding.bConnect.setText("Connected"));
                     dataFlowThread = new DataFlowThread(bluetoothSocket);
-                    dataFlowThread.start(); */
+                    dataFlowThread.start();
                    // bluetoothAdapter.getProfileProxy(MainActivity.this, serviceListener, BluetoothProfile.A2DP);
 
                 }
@@ -357,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bluetoothAdapter.closeProfileProxy(BluetoothProfile.A2DP, bluetoothA2dp);
+       // bluetoothAdapter.closeProfileProxy(BluetoothProfile.A2DP, bluetoothA2dp);
         connectThread.cancel();
     }
 
